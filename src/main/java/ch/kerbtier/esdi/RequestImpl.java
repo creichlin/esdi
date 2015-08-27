@@ -2,7 +2,7 @@ package ch.kerbtier.esdi;
 
 import java.lang.annotation.Annotation;
 
-public class RequestImpl implements Request {
+class RequestImpl implements Request {
 
   private Class<?> requested;
   private Esdi esdi;

@@ -53,12 +53,15 @@ repositories {
 }
 
 configurations {
-  exclude
+  pegdownDoclet
 }
 
 dependencies {
   // otherwise aspects won't be weaved into the testclasses from the main code
-  testAspectpath sourceSets.main.output 
+  testAspectpath sourceSets.main.output
+  
+  pegdownDoclet 'ch.raffael.pegdown-doclet:pegdown-doclet:1.1.1'
+   
   testCompile 'org.testng:testng:6.9.6'
 }
 
@@ -88,6 +91,11 @@ jar {
   manifest {
     attributes 'Implementation-Title': 'esdi', 'Implementation-Version': version
   }
+}
+
+javadoc {
+  options.docletpath = configurations.pegdownDoclet.files.asType(List)
+  options.doclet = "ch.raffael.doclets.pegdown.PegdownDoclet"
 }
 
 jacocoTestReport {

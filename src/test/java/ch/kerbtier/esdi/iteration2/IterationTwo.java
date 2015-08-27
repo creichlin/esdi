@@ -8,8 +8,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import ch.kerbtier.esdi.Esdi;
-import ch.kerbtier.esdi.SingletonProvider;
-import ch.kerbtier.esdi.ThreadLocalProvider;
+import ch.kerbtier.esdi.providers.SingletonProvider;
+import ch.kerbtier.esdi.providers.ThreadLocalProvider;
 import static org.testng.Assert.*;
 
 public class IterationTwo {

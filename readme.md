@@ -40,9 +40,9 @@ What?
 #### Result
 
 aspectj cannot find classes with fields with a certain annotation. For this every single class which uses injection
-needs to be annotated with the inject annotation on top of the fields.
+needs to be annotated with the inject annotation additionally to the annotated fields.
 
-the is an experimental hasfield() function in aspectJ but it seems to not work so far.
+there is an experimental hasfield() function in aspectJ but it seems to not work so far.
 
 
 ### Second iteration
@@ -71,7 +71,7 @@ So far I have only singleton and threadlocal in mind. The current/default will c
     
     // pojo.foo will be the same instance for the whole application (unless you fiddle around with classloaders)
     // pojo.bar will be the same instance for calls from the same thread
-    // pojo.qux will be a new instance for every instance of Qux
+    // pojo.qux will be a new instance for every instance of Pojo
     
 #### Result
 
@@ -88,5 +88,7 @@ It will be more work though.
 
 Clean up code, document, add some tests.
     
-    
+#### Result
+
+A lot of fancy javadoc.    
     

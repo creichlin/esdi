@@ -14,7 +14,7 @@ public aspect ConstructorInjectorAspect {
     for (Field f : o.getClass().getDeclaredFields()) {
       for (Annotation a : f.getAnnotations()) {
         
-        Object instance = Esdi.get(f.getType(), a.annotationType(), a);
+        Object instance = Esdi.get(f.getType(), a);
         if (instance != null) {
           try {
             f.setAccessible(true);

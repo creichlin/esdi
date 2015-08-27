@@ -1,5 +1,7 @@
 package ch.kerbtier.esdi.iteration1;
 
+import java.lang.annotation.Annotation;
+
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -23,13 +25,13 @@ public class IterationOne {
 
   @Test
   public void checkAImplementation() {
-    AInterface a = Esdi.get(AInterface.class, Inject.class, null);
+    AInterface a = Esdi.get(AInterface.class, new InjectImpl());
     assertEquals(a.getClass(), AImplementation.class);
   }
 
   @Test
   public void checkBImplementation() {
-    BImplementation a = Esdi.get(BImplementation.class, Inject.class, null);
+    BImplementation a = Esdi.get(BImplementation.class, new InjectImpl());
     assertEquals(a.getClass(), BImplementation.class);
   }
 
@@ -38,5 +40,12 @@ public class IterationOne {
     Container c = new Container();
     assertEquals(c.getAField().getClass(), AImplementation.class);
     assertEquals(c.getBField().getClass(), BImplementation.class);
+  }
+  
+  class InjectImpl implements Inject {
+    @Override
+    public Class<? extends Annotation> annotationType() {
+      return Inject.class;
+    }
   }
 }
