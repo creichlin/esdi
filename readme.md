@@ -38,7 +38,7 @@ What?
 
 ### Second iteration
 
-Use own annotation that extend from @Inject to get instances from different sources.
+Use own annotation annotated with @Inject to get instances from different sources.
 So far I have only singleton and threadlocal in mind. The current/default will create a new instance on each request.
     
     Esdi.register(InjectSingleton.class, SingletonProvider.class);
