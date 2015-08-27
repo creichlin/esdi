@@ -2,20 +2,34 @@ package ch.kerbtier.esdi;
 
 import java.lang.annotation.Annotation;
 
-public class Id {
+/**
+ * This ID class is used to map concrete implementations to their interfaces
+ * used by injection.
+ * 
+ * For identification a interface plus one annotation class is used.
+ * 
+ * If a value needs to be different for a parameterized annotation a custom
+ * Provider needs to be used to return different values for the concrete
+ * annotation instances.
+ * 
+ * @author creichlin
+ *
+ */
+class Id {
+
   private final Class<?> target;
   private final Class<? extends Annotation> annotation;
 
-  public Id(Class<?> target, Class<? extends Annotation> annotation) {
+  Id(Class<?> target, Class<? extends Annotation> annotation) {
     this.target = target;
     this.annotation = annotation;
   }
 
-  public Class<?> getTarget() {
+  Class<? extends Object> getTarget() {
     return target;
   }
 
-  public Class<? extends Annotation> getAnnotation() {
+  Class<? extends Annotation> getAnnotation() {
     return annotation;
   }
 

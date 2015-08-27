@@ -8,15 +8,16 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import ch.kerbtier.esdi.Esdi;
+import ch.kerbtier.esdi.SingletonProvider;
+import ch.kerbtier.esdi.ThreadLocalProvider;
 import static org.testng.Assert.*;
 
 public class IterationTwo {
   
   @BeforeMethod
   public void setUp() {
-    Esdi.register(InjectSingleton.class, SingletonProvider.class);
-    Esdi.register(InjectThreadLocal.class, ThreadLocalProvider.class);
-    
+    Esdi.register(InjectSingleton.class, new SingletonProvider());
+    Esdi.register(InjectThreadLocal.class, new ThreadLocalProvider());
     
     Esdi.onRequestFor(DefaultExample.class).deliver(DefaultExample.class);
     Esdi.onRequestFor(SingletonExample.class).with(InjectSingleton.class).deliver(SingletonExample.class);
@@ -49,7 +50,18 @@ public class IterationTwo {
       
     }.start();
     
+    waitAMoment();
+    
     assertEquals(e1, e2.get(0));
+  }
+
+
+  private void waitAMoment() {
+    try {
+      Thread.sleep(10);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
   
   @Test
@@ -63,7 +75,8 @@ public class IterationTwo {
   public void checkThreadLocalEquals() {
     ThreadLocalExample e1 = new Pojo().getThreadLocal();
     ThreadLocalExample e2 = new Pojo().getThreadLocal();
-    assertNotEquals(e1, e2);
+    
+    assertEquals(e1, e2);
   }
   
   @Test
@@ -79,7 +92,9 @@ public class IterationTwo {
       }
       
     }.start();
-    
+
+    waitAMoment();
+
     assertNotEquals(e1, e2.get(0));
   }
   
