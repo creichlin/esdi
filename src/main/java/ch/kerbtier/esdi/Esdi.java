@@ -100,7 +100,7 @@ public class Esdi {
     RequestImpl creator = getInstance().getRequest(id);
     if (creator != null) {
       Provider provider = getInstance().getProvider(annotationClass);
-      return (T) provider.get(id.getTarget(), creator.getImplementation(), annotation);
+      return (T) provider.get(creator, annotation);
     } else { // no creator found
       logger.info("no provider for annotation " + annotationClass);
     }

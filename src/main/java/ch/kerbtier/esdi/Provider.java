@@ -25,6 +25,6 @@ public interface Provider {
    * 
    * @return the instance of type requested
    */
-  Object get(Class<? extends Object> requested, Class<? extends Object> implementation, Annotation annotation);
+  Object get(Configuration configuration, Annotation annotation);
 
 }

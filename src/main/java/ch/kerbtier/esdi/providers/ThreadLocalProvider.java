@@ -2,6 +2,7 @@ package ch.kerbtier.esdi.providers;
 
 import java.lang.annotation.Annotation;
 
+import ch.kerbtier.esdi.Configuration;
 import ch.kerbtier.esdi.Provider;
 
 /**
@@ -17,12 +18,12 @@ public class ThreadLocalProvider implements Provider {
   private ThreadLocal<SingletonProvider> threadLocal = new ThreadLocal<>();
   
   @Override
-  public Object get(Class<? extends Object> target, Class<? extends Object> implementation, Annotation annotation) {
+  public Object get(Configuration configuration, Annotation annotation) {
     SingletonProvider sp = threadLocal.get();
     if(sp == null) {
       sp = new SingletonProvider();
       threadLocal.set(sp);
     }
-    return sp.get(target, implementation, annotation);
+    return sp.get(configuration, annotation);
   }
 }

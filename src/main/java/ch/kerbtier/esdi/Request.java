@@ -18,4 +18,6 @@ public interface Request {
 
   Request with(Class<? extends Annotation> annotation);
 
+  void deliverInstance(Object instance);
+
 }

@@ -1,4 +1,4 @@
-package ch.kerbtier.esdi.iteration2;
+package ch.kerbtier.esdi.tests;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,17 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import ch.kerbtier.esdi.Esdi;
+import ch.kerbtier.esdi.model.DefaultExample;
+import ch.kerbtier.esdi.model.InjectSingleton;
+import ch.kerbtier.esdi.model.InjectThreadLocal;
+import ch.kerbtier.esdi.model.Pojo;
+import ch.kerbtier.esdi.model.SingletonExample;
+import ch.kerbtier.esdi.model.ThreadLocalExample;
 import ch.kerbtier.esdi.providers.SingletonProvider;
 import ch.kerbtier.esdi.providers.ThreadLocalProvider;
 import static org.testng.Assert.*;
 
-public class IterationTwo {
+public class DeliverTests {
   
   @BeforeMethod
   public void setUp() {

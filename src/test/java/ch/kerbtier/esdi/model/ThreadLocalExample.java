@@ -1,4 +1,4 @@
-package ch.kerbtier.esdi.iteration2;
+package ch.kerbtier.esdi.model;
 
 public class ThreadLocalExample {
 

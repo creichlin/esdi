@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 
+import ch.kerbtier.esdi.Configuration;
 import ch.kerbtier.esdi.Provider;
 
 /**
@@ -25,14 +26,14 @@ public class SingletonProvider implements Provider {
   private DefaultProvider defaultProvider = new DefaultProvider();
   
   @Override
-  public Object get(Class<? extends Object> target, Class<? extends Object> implementation, Annotation annotation) {
-    Object impl = instances.get(target);
+  public Object get(Configuration configuration, Annotation annotation) {
+    Object impl = instances.get(configuration.getTarget());
     if(impl == null) {
       synchronized(instances) {
-        impl = instances.get(target);
+        impl = instances.get(configuration.getTarget());
         if(impl == null) {
-          impl = defaultProvider.get(target, implementation, annotation);
-          instances.put(target, impl);
+          impl = defaultProvider.get(configuration, annotation);
+          instances.put(configuration.getTarget(), impl);
         }
       }
     }

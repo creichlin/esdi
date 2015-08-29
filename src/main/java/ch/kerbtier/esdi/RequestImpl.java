@@ -2,12 +2,13 @@ package ch.kerbtier.esdi;
 
 import java.lang.annotation.Annotation;
 
-class RequestImpl implements Request {
+class RequestImpl implements Request, Configuration {
 
-  private Class<?> requested;
   private Esdi esdi;
+  private Class<?> requested;
   private Class<? extends Annotation> annotation = Inject.class;
   private Class<?> implementation;
+  private Object instance;
 
   public RequestImpl(Esdi esdi, Class<?> requested) {
     this.requested = requested;
@@ -24,6 +25,17 @@ class RequestImpl implements Request {
   public void deliver(Class<?> implementation_) {
     this.implementation = implementation_;
     
+    add();
+  }
+
+  @Override
+  public void deliverInstance(Object instance_) {
+    this.instance = instance_;
+    
+    add();
+  }
+
+  private void add() {
     Id id = new Id(requested, annotation);
     esdi.setCreator(id, this);
   }
@@ -32,8 +44,21 @@ class RequestImpl implements Request {
     return annotation;
   }
 
-  public Class<? extends Object> getImplementation() {
+  @Override
+  public
+  Class<? extends Object> getImplementation() {
     return implementation;
+  }
+  
+  @Override
+  public
+  Object getInstance() {
+    return instance;
+  }
+
+  @Override
+  public Class<? extends Object> getTarget() {
+    return requested;
   }
 
 }

@@ -90,5 +90,12 @@ Clean up code, document, add some tests.
     
 #### Result
 
-A lot of fancy javadoc.    
+A lot of fancy javadoc.
+
+### Fourth iteration
+
+Using instances for injection. Always the same instance will be delivered, does not matter
+if SingletonProvider or whatever is used, unless a custom Provider is created that supports cloning.
+
+    Esdi.onRequestFor(Bar.class).with(InjectThreadLocal.class).deliverInstance(new Bar());
     
