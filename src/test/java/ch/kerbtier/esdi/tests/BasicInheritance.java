@@ -32,6 +32,12 @@ public class BasicInheritance {
   }
 
   @Test
+  public void checkDefaultImplementationWithAnnotationClass() {
+    DefaultInterface a = Esdi.get(DefaultInterface.class, Inject.class);
+    assertEquals(a.getClass(), DefaultExample.class);
+  }
+
+  @Test
   public void checkContainer() {
     Pojo pojo = new Pojo();
     

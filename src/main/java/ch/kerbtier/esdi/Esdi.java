@@ -81,9 +81,8 @@ public class Esdi {
   }
 
   /**
-   * Can be used to get an instance of a configured injectable class. It should
-   * be not necessary to ever call this method. The normal way would be to
-   * annotate a field for injection and let the magic (aspectJ) do it.
+   * Can be used to get an instance of a configured injectable class. In normal circumstances it's not necessary to
+   * call this method. The normal way would be to annotate a field for injection and let the magic (aspectJ) do it.
    * 
    * It will be used for testing tough.
    * 
@@ -91,11 +90,19 @@ public class Esdi {
    * @param annotation
    * @return the instance that should be injected
    */
-  @SuppressWarnings("unchecked")
   public static <T> T get(Class<T> toDeliver, Annotation annotation) {
     // use annotationType() to get class of annotation interface, otherwise some
     // weird proxy implementation is returned.
     Class<? extends Annotation> annotationClass = annotation.annotationType();
+    return get(toDeliver, annotation, annotationClass);
+  }
+  
+  public static <T> T get(Class<T> toDeliver, Class<? extends Annotation> annotationClass) {
+    return get(toDeliver, null, annotationClass);
+  }
+
+  @SuppressWarnings("unchecked")
+  private static <T> T get(Class<T> toDeliver, Annotation annotation, Class<? extends Annotation> annotationClass) {
     Id id = new Id(toDeliver, annotationClass);
     RequestImpl creator = getInstance().getRequest(id);
     if (creator != null) {
@@ -106,7 +113,7 @@ public class Esdi {
     }
     return null;
   }
-
+  
   /**
    * 
    * registers an annotation to annotate fields for dependency injection and
