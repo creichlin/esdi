@@ -26,5 +26,10 @@ public interface Provider {
    * @return the instance of type requested
    */
   Object get(Configuration configuration, Annotation annotation);
+  
+  /**
+   * clears any hold/cached instances
+   */
+  void clear();
 
 }

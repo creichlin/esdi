@@ -20,4 +20,6 @@ public interface Request {
 
   void deliverInstance(Object instance);
 
+  void deliverThreadLocal(ThreadLocal<?> source);
+
 }

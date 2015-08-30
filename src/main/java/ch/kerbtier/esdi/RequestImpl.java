@@ -8,6 +8,7 @@ class RequestImpl implements Request, Configuration {
   private Class<?> requested;
   private Class<? extends Annotation> annotation = Inject.class;
   private Class<?> implementation;
+  private ThreadLocal<? extends Object> source;
   private Object instance;
 
   public RequestImpl(Esdi esdi, Class<?> requested) {
@@ -31,6 +32,13 @@ class RequestImpl implements Request, Configuration {
   @Override
   public void deliverInstance(Object instance_) {
     this.instance = instance_;
+    
+    add();
+  }
+
+  @Override
+  public void deliverThreadLocal(ThreadLocal<? extends Object> source_) {
+    this.source = source_;
     
     add();
   }
@@ -61,4 +69,8 @@ class RequestImpl implements Request, Configuration {
     return requested;
   }
 
+  @Override
+  public ThreadLocal<? extends Object> getThreadLocal() {
+    return source;
+  }
 }

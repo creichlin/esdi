@@ -99,3 +99,30 @@ if SingletonProvider or whatever is used, unless a custom Provider is created th
 
     Esdi.onRequestFor(Bar.class).with(InjectThreadLocal.class).deliverInstance(new Bar());
     
+### Fifth Iteration
+
+#### Usage
+
+Adding deliverThreaLocal(ThreadLocalInstance) so the initial value is fetched from that threadLocal.
+Allows for repeated data injection where the data comes from an external source.
+
+A Provider.clear() method is added to clear old data from for example a ThreadLocalProvider where it's
+thread is used in another context.
+
+    // for an operation which runs on one thread.
+    
+    ThreadLocal<OperationData> operationData = new ThreadLocaL<>();
+    ThreadLocalProvider provider = new ThreadLocalProvider(); 
+    Esdi.register(InjectOperation.class, provider);
+    Esdi.onRequestFor(OperationData.class).with(InjectOperation.class).deliverThreadLocal(operationData);
+    
+    // in each operation setup
+    operationData.set(externalOperationData);
+    provider.clear();
+    // from now all
+    @InjectOpration OperationData operationData...
+    // will give the current operationData value until thread is used for a new operation
+
+#### Result
+
+It's getting to compilcated to get intuitively what the result will be...
