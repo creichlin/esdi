@@ -10,7 +10,7 @@ public aspect ConstructorInjectorAspect {
 
   pointcut injectConstructor(Object o): execution((@Inject *).new(..)) && target(o);
 
-  after(Object o): injectConstructor(o) {
+  before(Object o): injectConstructor(o) {
     for (Field f : o.getClass().getDeclaredFields()) {
       for (Annotation a : f.getAnnotations()) {
         
