@@ -43,13 +43,9 @@ public class Esdi {
 
   // static methods
 
-  static Esdi getInstance() {
+  static synchronized Esdi getInstance() {
     if (instance == null) {
-      synchronized (Esdi.class) {
-        if (instance == null) {
-          instance = new Esdi();
-        }
-      }
+      instance = new Esdi();
     }
     return instance;
   }

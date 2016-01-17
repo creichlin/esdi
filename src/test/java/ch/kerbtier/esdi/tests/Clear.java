@@ -39,8 +39,6 @@ public class Clear {
     singletonProvider.clear();
     SingletonExample s3 = new Pojo().getSingleton();
     
-    System.out.println(s1 + " " + s2 + " " + s3);
-    
     assertEquals(s1, s2);
     assertNotEquals(s1, s3);
   }
