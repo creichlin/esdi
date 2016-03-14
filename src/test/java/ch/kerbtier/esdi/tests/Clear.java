@@ -50,8 +50,6 @@ public class Clear {
     threadLocalProvider.clear();
     ThreadLocalExample s3 = new Pojo().getThreadLocal();
 
-    System.out.println(s1 + " " + s2 + " " + s3);
-
     assertEquals(s1, s2);
     assertNotEquals(s1, s3);
   }
