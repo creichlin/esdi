@@ -13,7 +13,6 @@ import ch.kerbtier.esdi.model.InjectSingleton;
 import ch.kerbtier.esdi.model.InjectThreadLocal;
 import ch.kerbtier.esdi.model.Pojo;
 import ch.kerbtier.esdi.model.SingletonExample;
-import ch.kerbtier.esdi.model.ThreadLocalExample;
 import ch.kerbtier.esdi.providers.SingletonProvider;
 import ch.kerbtier.esdi.providers.ThreadLocalProvider;
 import static org.testng.Assert.*;
