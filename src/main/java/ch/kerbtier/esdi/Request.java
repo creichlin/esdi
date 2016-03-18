@@ -7,10 +7,8 @@ import java.lang.annotation.Annotation;
  * 
  * Can only be obtained by:
  * 
- *     Esdi.onRequestFor(Intaface.class);
+ *     Esdi.onRequestFor(Interface.class);
  * 
- * @author creichlin
- *
  */
 public interface Request {
 

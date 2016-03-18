@@ -12,8 +12,6 @@ import java.lang.annotation.Target;
  * Can also be used to mark other annotations so they can mark fields for
  * injection.
  * 
- * @author creichlin
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.FIELD })

@@ -14,8 +14,6 @@ import ch.kerbtier.esdi.Provider;
  * instance is given returns this instance and if threadlocal is given gets the
  * value of it.
  * 
- * @author creichlin
- *
  */
 public class DefaultProvider implements Provider {
 

@@ -28,9 +28,6 @@ import ch.kerbtier.esdi.providers.DefaultProvider;
  * Those two line define what should be done if a field with a type should be
  * injected with a certain injection annotation. {@see #onRequestFor(Class)}
  * 
- * 
- * @author creichlin
- *
  */
 
 public class Esdi {
@@ -51,6 +48,7 @@ public class Esdi {
   }
 
   /**
+   * 
    * start configuring an injectable resource.
    * 
    * Will return a {@see Request} instance which needs to be used to configure how
@@ -60,8 +58,8 @@ public class Esdi {
    * 
    *     Esdi.onRequestFor(TestInterface.class).deliver(TestImplementation.class);
    * 
-   * To allow TestInterface to be injectable by default @{@see Inject} annotation using
-   * the implictely configured {@see providers.DefaultProvider} which creates a new instance every single time when injected.
+   * To allow TestInterface to be injectable by default {@see Inject} annotation using
+   * the implicitely configured {@see providers.DefaultProvider} which creates a new instance every single time when injected.
    *     
    *     Esdi.onRequestFor(TestInterface.class).with(MyAnnotation.class).deliver(TestImplementation.class);
    *     
@@ -71,6 +69,7 @@ public class Esdi {
    * @param class1
    *          the type which the resource must implement.
    * @return Request implementation for further configuration.
+   * 
    */
   public static Request onRequestFor(Class<?> class1) {
     return new RequestImpl(getInstance(), class1);
@@ -82,8 +81,6 @@ public class Esdi {
    * 
    * It will be used for testing tough.
    * 
-   * @param toDeliver
-   * @param annotation
    * @return the instance that should be injected
    */
   public static <T> T get(Class<T> toDeliver, Annotation annotation) {
@@ -111,13 +108,9 @@ public class Esdi {
   }
   
   /**
-   * 
    * registers an annotation to annotate fields for dependency injection and
    * sets the corresponding Provider who actually Provides the requested
    * instances.
-   * 
-   * @param annotation
-   * @param provider
    */
   public static void register(Class<? extends Annotation> annotation, Provider provider) {
     getInstance().reg(annotation, provider);

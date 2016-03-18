@@ -53,14 +53,12 @@ class RequestImpl implements Request, Configuration {
   }
 
   @Override
-  public
-  Class<? extends Object> getImplementation() {
+  public Class<? extends Object> getImplementation() {
     return implementation;
   }
   
   @Override
-  public
-  Object getInstance() {
+  public Object getInstance() {
     return instance;
   }
 
