@@ -1,0 +1,33 @@
+
+plugins {
+  id 'java'
+  id 'eclipse'
+  id 'maven'
+  id 'jacoco'
+}
+
+apply from: 'kerbtier-defaults.gradle'
+
+
+dependencies {
+  compile 'org.javassist:javassist:3.20.0-GA'
+  compile rootProject
+  
+  testCompile 'org.testng:testng:6.9.6'
+}
+
+test {
+  useTestNG()
+  
+  testLogging {
+    exceptionFormat = 'full'
+  }
+  
+  maxHeapSize = '8m'
+}
+
+jacocoTestReport {
+  reports {
+    html.enabled true
+  }
+}

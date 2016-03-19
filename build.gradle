@@ -1,12 +1,14 @@
+import ch.kerbtier.esdi.javassist.InjectEsdi;
+
 buildscript {
   repositories {
-    maven {
-      url "https://maven.eveoh.nl/content/repositories/releases"
-    }
+    mavenCentral()
+    mavenLocal()
   }
-
+  
   dependencies {
-    classpath "nl.eveoh:gradle-aspectj:1.6"
+    classpath 'org.javassist:javassist:3.20.0-GA'
+    classpath 'ch.kerbtier.esdi-injector:esdi-injector:0.1.+'
   }
 }
 
@@ -19,29 +21,34 @@ plugins {
 
 apply from: 'kerbtier-defaults.gradle'
 
-project.ext {
-    aspectjVersion = '1.8.6'
-}
-
-apply plugin: 'aspectj'
- 
 
 dependencies {
-  // otherwise aspects won't be weaved into the testclasses from the main code
-  testAspectpath sourceSets.main.output
-  
   testCompile 'org.testng:testng:6.9.6'
 }
 
-
-compileTestAspect {
-  additionalAjcArgs = ['X' : 'hasMember', 'showWeaveInfo': 'true', 'debug': 'true']
+task classInstrumentation(type: EsdiTask) {
+  dependsOn compileTestJava
 }
 
-compileAspect {
-  additionalAjcArgs = ['X' : 'hasMember', 'showWeaveInfo': 'true', 'debug': 'true']
+class EsdiTask extends DefaultTask {
+    @TaskAction
+    def greet() {
+      def injector = new InjectEsdi();
+      
+      project.configurations.testCompile.each {
+        injector.addClasspath(it)
+      }
+      
+      injector.addClasspath(project.sourceSets.main.output.classesDir)
+      injector.addClasspath(project.sourceSets.test.output.classesDir)
+      
+      project.fileTree(project.sourceSets.test.output.classesDir).each {
+        injector.inject(it)
+      }
+    }
 }
-  
+
+test.dependsOn classInstrumentation
 
 test {
   useTestNG()

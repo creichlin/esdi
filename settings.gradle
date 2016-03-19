@@ -1,0 +1,4 @@
+
+include ':injector'
+
+project(':injector').name = 'esdi-injector'
