@@ -2,7 +2,6 @@ package ch.kerbtier.esdi.model;
 
 import ch.kerbtier.esdi.Inject;
 
-@Inject
 public class Pojo {
 
   @InjectSingleton

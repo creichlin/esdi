@@ -12,7 +12,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import ch.kerbtier.esdi.Esdi;
-import ch.kerbtier.esdi.Inject;
 import ch.kerbtier.esdi.providers.DefaultProvider;
 
 public class FailCases {
@@ -32,16 +31,13 @@ public class FailCases {
     assertEquals(new FailPojo().getData(), null);
   }
   
-  @Inject
   class FailPojo {
-    
     @InjectFail
     private String data;
     
     public String getData() {
       return data;
     }
-    
   }
   
   // Missing @Inject annotation

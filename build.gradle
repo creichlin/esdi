@@ -8,7 +8,7 @@ buildscript {
   
   dependencies {
     classpath 'org.javassist:javassist:3.20.0-GA'
-    classpath 'ch.kerbtier.esdi-injector:esdi-injector:0.1.+'
+    classpath 'ch.kerbtier.esdi-injector:esdi-injector:0.1.15'
   }
 }
 
