@@ -7,7 +7,7 @@ Why?
 
 Just trying out if di is possible with a much smaller codebase than all the other di frameworks calling themselves small.
 
-It will depend on aspectJ, aspectJ will do most of the heavy lifting.
+It will depend on javassist, javassist will do most of the heavy lifting.
 
 
 What?
@@ -17,7 +17,6 @@ What?
 
 #### Usage
     
-    @Inject
     class Foo {
       @Inject private Bar bar;
     }
@@ -60,7 +59,6 @@ So far I have only singleton and threadlocal in mind. The current/default will c
     Esdi.onRequestFor(Qux.class).deliver(Qux.class);
     
     
-    @Inject
     class Pojo {
       @InjectSingleton private Foo foo;
       @InjectThreadLocal private Bar bar;
@@ -126,3 +124,9 @@ thread is used in another context.
 #### Result
 
 It's getting to compilcated to understand intuitively what the result will be...
+
+### Sixth iteration
+
+Removed aspectj and using javassist. Results in performance improovement. Also the class level @Inject annotation is not needed anymore which was actually the biggest pifall I run into while using it in some projects.
+
+The ThreadLocal provider is a bit complicated in usage but it's very useful for repetive thread bound units of code execution like sessions for webapplications which are composed of a series of requests which run on different threads. The setup is a bit difficult but usually that is only an initial setup that will not have to be changed and spans only a few lines of code.
