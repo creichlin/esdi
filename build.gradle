@@ -7,8 +7,7 @@ buildscript {
   }
   
   dependencies {
-    classpath 'org.javassist:javassist:3.20.0-GA'
-    classpath 'ch.kerbtier.esdi-injector:esdi-injector:0.1.15'
+    classpath 'ch.kerbtier.esdi-injector:esdi-injector:0.1.+'
   }
 }
 
@@ -19,36 +18,14 @@ plugins {
   id 'jacoco'
 }
 
+apply plugin: 'kerbtier.esdi'
+
 apply from: 'kerbtier-defaults.gradle'
 
 
 dependencies {
   testCompile 'org.testng:testng:6.9.6'
 }
-
-task classInstrumentation(type: EsdiTask) {
-  dependsOn compileTestJava
-}
-
-class EsdiTask extends DefaultTask {
-    @TaskAction
-    def greet() {
-      def injector = new InjectEsdi();
-      
-      project.configurations.testCompile.each {
-        injector.addClasspath(it)
-      }
-      
-      injector.addClasspath(project.sourceSets.main.output.classesDir)
-      injector.addClasspath(project.sourceSets.test.output.classesDir)
-      
-      project.fileTree(project.sourceSets.test.output.classesDir).each {
-        injector.inject(it)
-      }
-    }
-}
-
-test.dependsOn classInstrumentation
 
 test {
   useTestNG()

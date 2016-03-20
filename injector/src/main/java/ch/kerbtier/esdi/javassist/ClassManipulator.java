@@ -13,12 +13,44 @@ import javassist.NotFoundException;
 public class ClassManipulator {
   
   private CtClass subject;
+  private ClassManipulatorLogger logger;
+
+  public ClassManipulator(CtClass subject, ClassManipulatorLogger logger) {
+    this.subject = subject;
+    this.logger = logger;
+  }
+  
   
   public ClassManipulator(CtClass subject) {
     this.subject = subject;
+    this.logger = new ClassManipulatorLogger() {
+      
+      @Override
+      public void log(String className, String field, String type) {
+        // log nothing, logging is for whimps
+      }
+
+      @Override
+      public void warn(String description) {
+        
+      }
+    };
   }
   
   public void manipulate() {
+    
+    if(subject.isAnnotation()) {
+      return;
+    }
+
+    if(subject.isInterface()) {
+      return;
+    }
+    
+    if(subject.isEnum()) {
+      return;
+    }
+    
     for(CtField field: subject.getDeclaredFields()) {
       
       try {
@@ -41,7 +73,7 @@ public class ClassManipulator {
             try {
               
               String code = "$0." + field.getName() + " = (" + field.getType().getName() + ")ch.kerbtier.esdi.Esdi.get(" + field.getType().getName() + ".class, " + usedAnnotation.annotationType().getCanonicalName() + ".class);";
-              System.out.println(code);
+              logger.log(subject.getName(), field.getName(), field.getType().getName());
               constructor.insertBeforeBody(code);
             } catch (CannotCompileException e) {
               throw new RuntimeException(e);
@@ -62,5 +94,10 @@ public class ClassManipulator {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+  }
+  
+  public interface ClassManipulatorLogger {
+    void log(String className, String field, String type);
+    void warn(String description);
   }
 }

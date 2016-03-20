@@ -4,6 +4,8 @@ plugins {
   id 'eclipse'
   id 'maven'
   id 'jacoco'
+  id 'java-gradle-plugin'
+  id 'groovy'
 }
 
 apply from: 'kerbtier-defaults.gradle'
@@ -11,7 +13,7 @@ apply from: 'kerbtier-defaults.gradle'
 
 dependencies {
   compile 'org.javassist:javassist:3.20.0-GA'
-  compile rootProject
+  compile 'ch.kerbtier.esdi:esdi:0.1.+'
   
   testCompile 'org.testng:testng:6.9.6'
 }
