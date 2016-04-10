@@ -3,7 +3,6 @@ package ch.kerbtier.esdi.javassist;
 import java.io.FileOutputStream;
 import java.lang.annotation.Annotation;
 
-import ch.kerbtier.esdi.Inject;
 import javassist.CannotCompileException;
 import javassist.CtClass;
 import javassist.CtConstructor;
@@ -14,10 +13,18 @@ public class ClassManipulator {
   
   private CtClass subject;
   private ClassManipulatorLogger logger;
+  
+  private Class injectClass;
 
   public ClassManipulator(CtClass subject, ClassManipulatorLogger logger) {
     this.subject = subject;
     this.logger = logger;
+    try {
+      // for Inject annotations check we need to load the Inject annotation trough the same classloader like the annotations we check for
+      injectClass = subject.getClassPool().getClassLoader().loadClass("ch.kerbtier.esdi.Inject");
+    } catch (ClassNotFoundException e) {
+      throw new RuntimeException(e);
+    }
   }
   
   
@@ -27,7 +34,7 @@ public class ClassManipulator {
       
       @Override
       public void log(String className, String field, String type) {
-        // log nothing, logging is for whimps
+        // log nothing, logging is for whiney whimps
       }
 
       @Override
@@ -56,8 +63,8 @@ public class ClassManipulator {
       try {
         Annotation usedAnnotation = null;
         for(Object annotation :field.getAnnotations()) {
-          boolean validAnnotation = annotation instanceof Inject;
-          validAnnotation = validAnnotation || ((Annotation)annotation).annotationType().getAnnotation(Inject.class) != null;
+          boolean validAnnotation = annotation.getClass().isAssignableFrom(injectClass);
+          validAnnotation = validAnnotation || ((Annotation)annotation).annotationType().getAnnotation(injectClass) != null;
           
           if(validAnnotation) {
             if(usedAnnotation != null) {
@@ -83,7 +90,7 @@ public class ClassManipulator {
           }
         }
       } catch (ClassNotFoundException e) {
-        e.printStackTrace();
+        throw new RuntimeException(e);
       }
     }
   }

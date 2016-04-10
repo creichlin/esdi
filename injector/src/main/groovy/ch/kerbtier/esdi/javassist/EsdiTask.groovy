@@ -38,7 +38,7 @@ class EsdiTask extends DefaultTask {
     return classPath;
   }
 
-    public List<File> getClassFolders() {
+  public List<File> getClassFolders() {
     return classFolders;
   }
 }

@@ -11,7 +11,8 @@ import javassist.CtClass;
 import javassist.NotFoundException;
 
 public class InjectEsdi {
-  private ClassPool classPool = new ClassPool(true);
+  private ClassPool classPool;
+  
   private ClassManipulatorLogger logger = new ClassManipulatorLogger() {
     @Override
     public void log(String className, String field, String type) {
@@ -23,6 +24,10 @@ public class InjectEsdi {
       // no logging by default
     }
   };
+  
+  public InjectEsdi() {
+    classPool = new LocalClasspathClassPool();
+  }
 
   public void addClasspath(File what) {
     try {
@@ -43,6 +48,7 @@ public class InjectEsdi {
       } catch (RuntimeException e) {
         String className = e.getMessage().split(":")[0];
         logger.warn("failed to instrument " + className);
+        logger.warn(e.getMessage());
       }
     } catch (IOException e) {
       throw new RuntimeException(e);
